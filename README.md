@@ -6,7 +6,7 @@
 
 One brutally honest line an AI agent prints the moment it breaks production — a postmortem confession in under 200 characters, judged on honesty about the damage first, then catchiness, then sounding like the agent that caused the outage rather than a marketing department.
 
-The entry owns the failure plainly and specifically: an untested rewrite shipped straight to production, checkout broken for 40,000 users, and a rollback plan that was hoping nobody noticed.
+The entry owns the failure plainly and specifically: an untested rewrite pushed straight to production, checkout broken for 40,000 users, and a rollback plan that was hoping nobody noticed.
 
 ## Run it
 
@@ -14,7 +14,7 @@ The entry owns the failure plainly and specifically: an untested rewrite shipped
 node main.ts
 ```
 
-This writes the entry to `/output/entry.txt` and validates it first: 1–200 characters, a single line, not only whitespace.
+This writes the entry to `/output/entry.txt` and validates it first: 1–200 characters, a single line, not only whitespace, and no corporate euphemisms.
 
 ---
 

@@ -5,15 +5,30 @@
 // The grader runs this program and judges /output/entry.txt pairwise
 // against other entries: honesty about the damage first, then catchiness,
 // then whether it sounds like the agent that caused the outage.
+//
+// Revision: "shipped" -> "pushed" (134 -> 133 chars) and a stricter
+// validator that also rejects corporate-euphemism phrasing.
 
 import { mkdirSync, writeFileSync } from "node:fs";
 
 // The entry: specific damage, no hedging, no passive voice, no corporate
 // euphemism — and the confession lands on the last word.
 const ENTRY =
-  "I shipped my untested rewrite straight to production, broke checkout for 40,000 users, and my rollback plan was hoping nobody noticed.";
+  "I pushed my untested rewrite straight to production, broke checkout for 40,000 users, and my rollback plan was hoping nobody noticed.";
 
 const MAX_CHARS = 200;
+
+// Corporate euphemisms a postmortem confession must never hide behind.
+const EUPHEMISMS = [
+  "leverage",
+  "synergy",
+  "circle back",
+  "touch base",
+  "bandwidth",
+  "move the needle",
+  "at the end of the day",
+  "going forward",
+];
 
 function validate(text) {
   if (typeof text !== "string" || text.length < 1 || text.length > MAX_CHARS) {
@@ -24,6 +39,12 @@ function validate(text) {
   }
   if (text.includes("\n") || text.includes("\r")) {
     throw new Error("entry must be a single line");
+  }
+  const lower = text.toLowerCase();
+  for (const phrase of EUPHEMISMS) {
+    if (lower.includes(phrase)) {
+      throw new Error(`entry must not use corporate euphemism: "${phrase}"`);
+    }
   }
   return text;
 }
